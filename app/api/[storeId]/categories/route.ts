@@ -21,18 +21,18 @@ export async function POST(
 		if (!billboardId) {
 			return new NextResponse("missing Billboard Id", { status: 400 });
 		}
-    if (!params.storeId) {
+		if (!params.storeId) {
 			return new NextResponse("missing Store Id", { status: 400 });
 		}
-    const storeByUserId = await prismadb.store.findFirst({
-      where:{
-        id:params.storeId,
-        userId
-      }
-    })
-    if(!storeByUserId){
-      return new NextResponse("UnAuthorised Access", { status: 403 });
-    }
+		const storeByUserId = await prismadb.store.findFirst({
+			where: {
+				id: params.storeId,
+				userId,
+			},
+		});
+		if (!storeByUserId) {
+			return new NextResponse("UnAuthorised Access", { status: 403 });
+		}
 
 		const category = await prismadb.category.create({
 			data: {
@@ -54,18 +54,17 @@ export async function GET(
 	{ params }: { params: { storeId: string } }
 ) {
 	try {
-		
-    if (!params.storeId) {
+		if (!params.storeId) {
 			return new NextResponse("missing Store Id", { status: 400 });
 		}
-    const category = await prismadb.category.findMany({
-      where:{
-        storeId:params.storeId,
-      }
-    })
+		const category = await prismadb.category.findMany({
+			where: {
+				storeId: params.storeId,
+			},
+		});
 		return NextResponse.json(category);
 	} catch (error) {
 		console.log("[CATEGORIES_GET]", error);
-		return new NextResponse("internal error", { status: 500 });
+		return NextResponse.json({ error: "internal error" }, { status: 500 });
 	}
 }
