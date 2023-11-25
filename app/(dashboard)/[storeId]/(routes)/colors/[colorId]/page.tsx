@@ -1,0 +1,27 @@
+import React from "react";
+import BillboardForm from "./color-form";
+
+const ColorPage = async ({
+	params,
+}: {
+	params: { colorId: string };
+}) => {
+  const color = await prisma.color.findUnique({
+    where:{
+      id:params.colorId
+    }
+  })
+
+  color?console.log(color):console.log("no color");
+
+
+
+
+	return <div className="flex-col">
+    <div className="flex-1 space-y-4 p-8 pt-6">
+      <BillboardForm initialData={color}/>
+    </div>
+  </div>;
+};
+
+export default ColorPage;
