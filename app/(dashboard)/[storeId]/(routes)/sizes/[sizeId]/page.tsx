@@ -1,12 +1,13 @@
 import React from "react";
 import BillboardForm from "./size-form";
+import prismadb from "@/lib/prismadb";
 
 const SizePage = async ({
 	params,
 }: {
 	params: { sizeId: string };
 }) => {
-  const size = await prisma.size.findUnique({
+  const size = await prismadb.size.findUnique({
     where:{
       id:params.sizeId
     }

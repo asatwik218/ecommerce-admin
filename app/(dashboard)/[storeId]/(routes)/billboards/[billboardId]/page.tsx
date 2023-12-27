@@ -1,12 +1,13 @@
 import React from "react";
 import BillboardForm from "./billboard-form";
+import prismadb from "@/lib/prismadb";
 
 const BillboardPage = async ({
 	params,
 }: {
 	params: { billboardId: string };
 }) => {
-  const billboard = await prisma.billboard.findUnique({
+  const billboard = await prismadb.billboard.findUnique({
     where:{
       id:params.billboardId
     }

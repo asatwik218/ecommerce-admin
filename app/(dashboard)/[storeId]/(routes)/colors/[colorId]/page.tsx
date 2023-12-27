@@ -1,12 +1,13 @@
 import React from "react";
 import BillboardForm from "./color-form";
+import prismadb from "@/lib/prismadb";
 
 const ColorPage = async ({
 	params,
 }: {
 	params: { colorId: string };
 }) => {
-  const color = await prisma.color.findUnique({
+  const color = await prismadb.color.findUnique({
     where:{
       id:params.colorId
     }
